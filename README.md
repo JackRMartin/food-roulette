@@ -1,8 +1,10 @@
-# food-roulette
-CPSC 254 Project - Food Roulette
+# CPSC 254 Project - Food Roulette
 
 ## The Problem
+Too often are friends and family troubled by agreeing on a place to eat.
 
+## The Solution
+An application that will allow people to randomly choose a restaurant to go to based on location and cuisine.
 
 ## About 
 This project will find nearby restaurants, and it will allow the user to randomly select one. 
