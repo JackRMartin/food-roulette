@@ -11,7 +11,6 @@ This project will find nearby restaurants, and it will allow the user to randoml
 ## C++
 * GTK for GUI development
 * YelpCurl ( c++ wrapper for yelp fusion api )
-* Possibly use google maps api for getting a user's location OR Yelp Query for city location
 
 ## Python 
 * Yelp Fusion ( python api ) 
