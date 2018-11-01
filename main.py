@@ -14,24 +14,12 @@ def reset():
     reset_button.config(state = "disabled")
     results.delete(0, tk.END);
 
-
-####################
-#                  #
-#   Create root    #
-#                  #
-####################
-
 root = tk.Tk()
 root.title("Food-roulette")
 root.geometry("700x475+600+100")
 root.resizable(False, False)
 
 
-####################
-#                  #
-#     Buttons      #
-#                  #
-####################
 
 random_button = tk.Button(root, text = "Choose a random restaurant", command = random_rest)
 #random_button.grid(row=0, column=0)
@@ -48,12 +36,6 @@ reset_button.place(x = 300, y = 380)
 #choice_label.pack(padx = 5, pady = 10, side = "bottom")
 #choice_label.place(x = 10, y =10)
 
-
-####################
-#                  #
-#     Filters      #
-#                  #
-####################
 
 filter_label = tk.Label(root, text = "Filter by category", relief = "ridge")
 filter_label.place(x = 535, y = 100)
@@ -78,12 +60,6 @@ price_scale = tk.Scale(root, from_=0, to_=100, orient = "horizontal")
 price_scale.place(x = 525, y = 300)
 '''
 
-####################
-#                  #
-# ListBox-results  #
-#                  #
-####################
-
 results_label = tk.Label(root, text = "Restaurant Results", relief = "ridge")
 results_label.place(x = 105, y = 2)
 
@@ -92,13 +68,6 @@ results.place(x = 50, y = 50)
 
 results_scrollbar = tk.Scrollbar(results)
 
-
-
-####################
-#                  #
-#  Keyword entry   #
-#                  #
-####################
 
 keyword_label = tk.Label(root, text = "Keyword Search", relief = "ridge")
 keyword_label.place(x = 350, y = 25)
