@@ -1,0 +1,9 @@
+import socket
+import requests
+hostname = socket.gethostname()
+IPAD = socket.gethostbyname(hostname)
+ip = requests.get("https://api.ipify.org").text
+print (ip)
+r = requests.get("http://api.ipstack.com/" +ip+"?access_key=142834bbe4ab45b22e84a39064652b97")
+#sip = 137.151.174.24
+print (r.content)
