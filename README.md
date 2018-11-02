@@ -8,9 +8,6 @@ An application that will allow people to randomly choose a restaurant to go to b
 
 ## About 
 This project will find nearby restaurants, and it will allow the user to randomly select one. 
-## C++
-* GTK for GUI development
-* YelpCurl ( c++ wrapper for yelp fusion api )
 
 ## Python 
 * Yelp Fusion ( python api ) 
