@@ -1,14 +1,3 @@
-'''
-import requests
-import socket
-
-hostname = socket.gethostname();
-
-
-r = requests.get("http://api.ipstack.com/137.151.174.24?access_key=98a13c3077a3992fd956e2a6f1b8dd43");
-
-print (r.content);
-'''
 from urllib.request import urlopen
 import json
 
