@@ -1,4 +1,11 @@
 import tkinter as tk
+import webbrowser
+#test url 
+url = "https://www.google.com/maps/search/MR+BBQ"
+
+#opens the user's restaurant in a new browser and inputs their restaurant in the google maps search bar.
+def open_directions():
+    webbrowser.open(url)
 
 
 def random_rest():
@@ -30,6 +37,9 @@ reset_button = tk.Button(root, text = "reset", command = reset, state = "disable
 #reset_button.grid(row=0, column=1)
 #reset_button.pack(padx = 5, pady = 10, side = "bottom")
 reset_button.place(x = 300, y = 380)
+
+directions_button = tk.Button(root , text = "Directions", command = open_directions)
+directions_button.place(x=300, y = 410)
 
 #choice_label = tk.Label(root, text="")
 #choice_label.grid(row=0,column=2)
