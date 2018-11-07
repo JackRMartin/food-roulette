@@ -18,11 +18,12 @@ root.geometry("850x600+600+100")
 root.resizable(False, False)
 
 def search():
-    query = yelp.query_api(term=keyword_entry.get(), location="fullerton", limit=10)
+    if keyword_entry.get() != "":
+        query = yelp.query_api(term=keyword_entry.get(), location="fullerton", limit=10)
 
-    for name in query:
-        results.insert(tk.END, query[name]["name"])
-        search_results.append(query[name]["name"])
+        for name in query:
+            results.insert(tk.END, query[name]["name"])
+            search_results.append(query[name]["name"])
 
 def move_right():
     pass
