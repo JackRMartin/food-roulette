@@ -121,9 +121,10 @@ def __get_business__(api_key, business_id):
     """
     return __request__(API_HOST, BUSINESS_PATH + business_id, api_key)
 
-
+'''
 ##################### TEST FUNCTIONS ####################
 print('------------PRINTING INFO BY ID------------')
 print_info(find_business_by_id('w6T-6l8_zKeYMtaokW1zVg'))
 print('-----------PRINTING 10 BOBA SHOPS IN FULLERTON------------')
 print_info_dump(query_api('boba', 'fullerton, ca', 10))
+'''
