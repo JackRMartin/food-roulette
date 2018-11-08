@@ -21,22 +21,50 @@ SEARCH_PATH = '/v3/businesses/search'
 BUSINESS_PATH = '/v3/businesses/'
 
 
-def query_api(term, location, limit):
+def query_by_location(term, location, limit=20, open_now=True):
     """
     Queries the Yelp API and returns a JSON of business info
     :param term: Query Term
     :param location: Query Location
     :param limit: Maximum number of results
+    :param open_now: True returns only open businesses, False returns ALL businesses
     :return: A Dictionary of businesses found
     """
 
-    response = __search__(API_KEY, term, location, limit)
+    response = __search_by_location__(API_KEY, term, location, limit, open_now)
     businesses = response.get('businesses')
     business_dict = {}
 
     # If no businesses were found
     if not businesses:
         print(u'No businesses for {0} in {1} found.'.format(term, location))
+        return
+
+    # Add businesses to a dictionary
+    for business in businesses:
+        business_dict[business['id']] = business
+
+    return business_dict
+
+
+def query_by_coordinate(term, lat=33.8749965, long=-117.884496462, limit=20, open_now=True):
+    """
+    Queries the Yelp API and returns a JSON of business info
+    :param term: Query Term
+    :param lat: Query latitude
+    :param long: Query longitude
+    :param limit: Maximum number of results
+    :param open_now: True returns only open businesses, False returns ALL businesses
+    :return: A Dictionary of businesses found
+    """
+
+    response = __search_by_coord__(API_KEY, term, lat, long, limit, open_now)
+    businesses = response.get('businesses')
+    business_dict = {}
+
+    # If no businesses were found
+    if not businesses:
+        print(u'No businesses for {0} at {1}, {2} found.'.format(term, lat, long))
         return
 
     # Add businesses to a dictionary
@@ -71,11 +99,12 @@ def print_info_dump(business_dict):
     :param business_dict: The dictionary to print
     :return: NONE
     """
-    for business in business_dict:
-        print_info(business_dict[business])
+    if business_dict:
+        for business in business_dict:
+            print_info(business_dict[business])
 
 
-def __search__(api_key, term, location, limit):
+def __search_by_location__(api_key, term, location, limit, open_now):
     """
     Prepares the search queries for HTTP request
     :param api_key: Yelp Fusion API Key
@@ -87,7 +116,28 @@ def __search__(api_key, term, location, limit):
     url_params = {
         'term': term.replace(' ', '+'),
         'location': location.replace(' ', '+'),
-        'limit': limit
+        'limit': limit,
+        'open_now': open_now,
+    }
+    return __request__(API_HOST, SEARCH_PATH, api_key, url_params=url_params)
+
+
+def __search_by_coord__(api_key, term, lat, long, limit, open_now):
+    """
+    Prepares the search queries for HTTP request
+    :param api_key: Yelp Fusion API Key
+    :param term: Query Term
+    :param lat: Query latitude
+    :param long: Query longitude
+    :param limit: Maximum number of results
+    :return: A JSON of businesses queried
+    """
+    url_params = {
+        'term': term.replace(' ', '+'),
+        'latitude': lat,
+        'longitude': long,
+        'limit': limit,
+        'open_now': open_now,
     }
     return __request__(API_HOST, SEARCH_PATH, api_key, url_params=url_params)
 
@@ -121,10 +171,25 @@ def __get_business__(api_key, business_id):
     """
     return __request__(API_HOST, BUSINESS_PATH + business_id, api_key)
 
-'''
-##################### TEST FUNCTIONS ####################
+
+# '''
+'################# TEST FUNCTIONS ####################'
 print('------------PRINTING INFO BY ID------------')
 print_info(find_business_by_id('w6T-6l8_zKeYMtaokW1zVg'))
-print('-----------PRINTING 10 BOBA SHOPS IN FULLERTON------------')
-print_info_dump(query_api('boba', 'fullerton, ca', 10))
-'''
+print()
+print()
+print('-------PRINTING 10 BOBA SHOPS IN FULLERTON-------')
+print_info_dump(query_by_location('boba', 'fullerton, ca', 20, True))
+print()
+print()
+print('-------PRINTING DEFAULT LOCATION SELECTION-------')
+print_info_dump(query_by_location('dinner', 'los angeles, ca'))
+print()
+print()
+print('----PRINTING 10 COFFEE SHOPS GIVEN COORDINATES-----')
+print_info_dump(query_by_coordinate('coffee', 33.8749965, -117.884496462, 20, True))
+print()
+print()
+print('------PRINTING DEFAULT COORDINATE SELECTION------')
+print_info_dump(query_by_coordinate('steak'))
+# '''

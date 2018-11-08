@@ -10,8 +10,8 @@ def random_rest():
 def reset():
     #choice_label.config(text = "")
     random_button.config(state = "active")
-    results.delete(0, tk.END);
-    query = "";
+    results.delete(0, tk.END)
+    query = ""
 root = tk.Tk()
 root.title("Food-roulette")
 root.geometry("850x600+600+100")
@@ -19,7 +19,7 @@ root.resizable(False, False)
 
 def search():
     if keyword_entry.get() != "":
-        query = yelp.query_api(term=keyword_entry.get(), location="fullerton", limit=10)
+        query = yelp.query_by_location(term=keyword_entry.get(), location="fullerton", limit=10)
 
         for name in query:
             results.insert(tk.END, query[name]["name"])
