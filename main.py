@@ -24,7 +24,6 @@ def reset():
     del user_choices[:]
     del search_results[:]
     results_dict.clear()
-    print (results_dict)
 
 def reset_search():
     del search_results[:]
