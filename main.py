@@ -4,37 +4,35 @@ import random
 
 user_choices = []
 search_results = []
+results_dict = {}
 
 def random_rest():
-     my_choice  = random.choice(user_choices)
-     popup = tk.Tk()
-     popup.title("You have randomly chosen " + my_choice + "!")
-     popup.geometry("500x500+800+300")
-     choice_label = tk.Label(popup, text = "You have randomly chosen " + my_choice + "!")
-     choice_label.place(x = 100, y = 100)
+    if len(user_choices) != 0:
+        my_choice  = random.choice(user_choices)
+        popup = tk.Tk()
+        popup.title("You have randomly chosen " + my_choice + "!")
+        popup.geometry("500x500+800+300")
+        choice_label = tk.Label(popup, text = "You have randomly chosen " + my_choice + "!")
+        choice_label.place(x = 100, y = 100)
 
 def reset():
     random_button.config(state = "active")
-    delivery_btn.deselect()
-    alcohol_btn.deselect()
-    is_open_btn.deselect()
-    take_out_btn.deselect()
     results.delete(0, tk.END)
     query = ""
     selections.delete(0, tk.END)
     keyword_entry.delete(0, tk.END)
     del user_choices[:]
     del search_results[:]
+    results_dict.clear()
+    print (results_dict)
 
 def reset_search():
     del search_results[:]
     keyword_entry.delete(0, tk.END)
-    random_button.config(state = "active")
-    delivery_btn.deselect()
-    alcohol_btn.deselect()
-    is_open_btn.deselect()
-    take_out_btn.deselect()
     results.delete(0, tk.END)
+    random_button.config(state = "active")
+    results.delete(0, tk.END)
+    del search_results[:]
     query = ""
 
 root = tk.Tk()
@@ -44,20 +42,24 @@ root.resizable(False, False)
 
 def search():
     if keyword_entry.get() != "":
-        query = yelp.query_by_location(term=keyword_entry.get(), location="fullerton", limit=1)
+        query = yelp.query_by_location(term=keyword_entry.get(), location="fullerton", limit=10)
 
         for name in query:
             results.insert(tk.END, query[name]["name"])
             search_results.append(query[name]["name"])
+            results_dict[query[name]["name"]] = query[name]["id"]
             print (query)
+            print ("\n\n\n\n")
+            print (results_dict)
 
 def move_right():
     # move item from user choices to search results
-    user_choices.remove(selections.get(selections.curselection()))
-    print (user_choices)
+    if len(user_choices) != 0:
+        user_choices.remove(selections.get(selections.curselection()))
+        print (user_choices)
 
-    results.insert(tk.END, selections.get(selections.curselection()))
-    selections.delete(selections.curselection())
+        results.insert(tk.END, selections.get(selections.curselection()))
+        selections.delete(selections.curselection())
 
 def move_left():
     # move item from search results to user choices
@@ -68,12 +70,13 @@ def move_left():
             duplicate_found = True
 
     if duplicate_found == False:
-        user_choices.append(results.get(results.curselection()))
-        selections.insert(tk.END, results.get(results.curselection()))
+        if len(search_results) != 0:
+            user_choices.append(results.get(results.curselection()))
+            selections.insert(tk.END, results.get(results.curselection()))
 
-    results.delete(results.curselection())
+            results.delete(results.curselection())
 
-    print (user_choices)
+            print (user_choices)
 
 random_button = tk.Button(root, text = "Choose a random restaurant", command = random_rest)
 random_button.place(x = 625, y = 400)
