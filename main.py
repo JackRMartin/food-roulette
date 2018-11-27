@@ -1,6 +1,7 @@
 import tkinter as tk
 import yelp as yelp
 import random
+import webbrowser
 
 user_choices = []
 search_results = []
@@ -12,6 +13,7 @@ def random_rest():
         popup = tk.Tk()
         popup.title("You have randomly chosen " + my_choice + "!")
         popup.geometry("500x500+800+300")
+        webbrowser.open('https://www.google.com/maps/search/' + my_choice)
         choice_label = tk.Label(popup, text = "You have randomly chosen " + my_choice + "!")
         choice_label.place(x = 100, y = 100)
 
@@ -33,6 +35,11 @@ def reset_search():
     results.delete(0, tk.END)
     del search_results[:]
     query = ""
+
+def get_directions():
+    z = selections.get(selections.curselection())
+    print(z)
+    webbrowser.open('https://www.google.com/maps/search/' + z)
 
 root = tk.Tk()
 root.title("Food-roulette")
@@ -79,6 +86,9 @@ def move_left():
 
 random_button = tk.Button(root, text = "Choose a random restaurant", command = random_rest)
 random_button.place(x = 625, y = 400)
+
+get_directions_button = tk.Button(root, text = "Get Directions", command = get_directions)
+get_directions_button.place(x = 125, y = 470)
 
 reset_button = tk.Button(root, text = "Reset All", command = reset)
 reset_button.place(x = 625, y = 435)
