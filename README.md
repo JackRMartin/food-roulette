@@ -7,7 +7,7 @@
 * An application that will allow people to randomly choose a restaurant to go to based on location and cuisine.
 
 ## About 
-*This project will find nearby restaurants, and it will allow the user to randomly select one. 
+* This project will find nearby restaurants, and it will allow the user to randomly select one. 
 
 ## Requirements
 * This project was written using python 3.6
