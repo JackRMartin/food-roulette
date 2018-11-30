@@ -22,7 +22,5 @@
 * Build Desktop GUI for the application
 * Find User's Location ( either through an api like Google maps, or we will have the user enter it manually )
 * Allow user to filter different restaurants by cuisine
-* 'Choose random' button - that will randomly select a nearby restaurant with the before mentioned filter and radiues
+* 'Choose random' button - that will randomly select a nearby restaurant based on user choices and location
 * Give Directions to the restaurant
-
-##
