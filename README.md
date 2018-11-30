@@ -11,7 +11,7 @@
 
 ## Requirements
 * This project was written using python 3.6
-* To use the Tkinter Framework and the Yelp Api, use at least python version 3.xx
+* To use the Tkinter Framework and the Yelp Api, use at least python version 3
 
 ## Python 
 * Yelp Fusion ( python api ) 
