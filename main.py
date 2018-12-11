@@ -6,6 +6,8 @@ import requests
 import json
 import webbrowser
 
+rlist = []
+
 user_choices = []
 search_results = []
 results_dict = {}
@@ -18,16 +20,38 @@ r = requests.get("http://api.ipstack.com/" + ip + "?access_key=142834bbe4ab45b22
 geo = json.loads(r.text)
 latitude = geo['latitude']
 longitude = geo['longitude']
-     
+
+class Restaurant:
+    def __init__(self, name, price, rating , phone):
+        self.name = name
+        self.price = price
+        self.rating = rating
+        self.phone = phone
+
 def random_rest():
     if len(user_choices) != 0:
         my_choice  = random.choice(user_choices)
         popup = tk.Tk()
         popup.title("You have randomly chosen " + my_choice + "!")
-        popup.geometry("500x500+800+300")
-        webbrowser.open('https://www.google.com/maps/search/' + my_choice)
+        popup.geometry("500x300+800+300")
+        #webbrowser.open('https://www.google.com/maps/search/' + my_choice)
         choice_label = tk.Label(popup, text = "You have randomly chosen " + my_choice + "!")
         choice_label.place(x = 100, y = 100)
+        for i in range(len(rlist)):
+            if my_choice == rlist[i].name:                
+                choice_price = tk.Label(popup,text = "Price: " + rlist[i].price)
+                choice_price.place(x=100, y = 130)
+                choice_price2 = tk.Label(popup,text = "Rating: " + str(rlist[i].rating))
+                choice_price2.place(x=100, y = 160)
+                choice_price3 = tk.Label(popup,text = "Phone: " + str(rlist[i].phone))
+                choice_price3.place(x=100, y = 190)
+##                get_directions_button = tk.Button(popup, text = "Get Directions", command =direct_get(my_choice))
+##                get_directions_button.place(x = 100, y = 220)
+
+def direct_get(c):
+    webbrowser.open('https://www.google.com/maps/search/' + c)
+    
+                
 
 def reset():
     random_button.config(state = "active")
@@ -50,7 +74,6 @@ def reset_search():
 
 def get_directions():
     z = selections.get(selections.curselection())
-    print(z)
     webbrowser.open('https://www.google.com/maps/search/' + z)
 
 root = tk.Tk()
@@ -65,10 +88,13 @@ def search():
         for name in query:
             results.insert(tk.END, query[name]["name"])
             search_results.append(query[name]["name"])
+            #newrest =
+            r = Restaurant(query[name]['name'],query[name]['price'],query[name]['rating'],query[name]['phone'])
+            rlist.append(r)            
             results_dict[query[name]["name"]] = query[name]["id"]
-            print (query)
-            print ("\n\n\n\n")
-            print (results_dict)    
+##            print (query)
+##            print ("\n\n\n\n")
+##            print (results_dict)
 
 def move_right():
     # move item from user choices to search results
