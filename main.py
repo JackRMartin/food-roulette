@@ -6,19 +6,27 @@ import requests
 import json
 import webbrowser
 
+#list that holds the restaurants
 rlist = []
+#list of the user's picks
 user_choices = []
+#list of the search results
 search_results = []
+#dictionary for the search results
 results_dict = {}
+
 #Gets user's IP and geographical location
 hostname = socket.gethostname()
 IPAD = socket.gethostbyname(hostname)
+#Uses the ipify API to grab your IP and the ipstack API to get the geographical coordinates based on the IP.
 ip = requests.get("https://api.ipify.org").text
 r = requests.get("http://api.ipstack.com/" + ip + "?access_key=142834bbe4ab45b22e84a39064652b97")
 geo = json.loads(r.text)
+#stores lat and long
 latitude = geo['latitude']
 longitude = geo['longitude']
 
+#restaurant object to hold info
 class Restaurant():
 
     def __init__(self, name, rating, phone):
@@ -27,7 +35,7 @@ class Restaurant():
         self.phone = phone
 
     
-     
+#Chooses a random restaurant from the user choice list  
 def random_rest():
     if len(user_choices) != 0:
         my_choice  = random.choice(user_choices)
@@ -38,6 +46,7 @@ def random_rest():
 ##        choice_label = tk.Label(popup, text = "You have randomly chosen " + my_choice + "!")
 ##        choice_label.place(x = 100, y = 100)
 
+#Resets the search
 def reset():
     random_button.config(state = "active")
     results.delete(0, tk.END)
@@ -66,6 +75,7 @@ root.title("Food-roulette")
 root.geometry("850x600+600+100")
 root.resizable(False, False)
 
+#Function for searching up restaurants.
 def search():
     if keyword_entry.get() != "":
         query = yelp.query_by_coordinate(term=keyword_entry.get(), lat = latitude, long = longitude , limit=10)
@@ -74,7 +84,6 @@ def search():
             results.insert(tk.END, query[name]["name"])
             search_results.append(query[name]["name"])
             results_dict[query[name]["name"]] = query[name]["id"]
-            print(query[name]['name'] + str(query[name]['rating']))
 
 
             r = Restaurant(query[name]['name'],query[name]['rating'],query[name]['phone'])
@@ -108,8 +117,9 @@ def move_left():
 
             results.delete(results.curselection())
 
-            print (user_choices)
+            #print (user_choices)
 
+#Function for getting the info of a restaurant from the results listbox
 def get_info():
     uc = results.get(results.curselection())
     ipopup = tk.Tk()
@@ -147,8 +157,8 @@ move_to_selection_btn.place(x = 310, y = 200)
 remove_from_selection_btn = tk.Button(root, text = "<<", command = move_left)
 remove_from_selection_btn.place(x = 310, y = 250)
 
-filter_label = tk.Label(root, text = "Filters(in progress)", relief = "ridge")
-filter_label.place(x = 700, y = 150)
+##filter_label = tk.Label(root, text = "Filters(in progress)", relief = "ridge")
+##filter_label.place(x = 700, y = 150)
 '''
 delivery_btn = tk.Checkbutton(root, text = "Delivery Available")
 delivery_btn.place(x = 650, y = 175)
