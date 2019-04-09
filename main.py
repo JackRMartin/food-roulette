@@ -20,7 +20,7 @@ hostname = socket.gethostname()
 IPAD = socket.gethostbyname(hostname)
 #Uses the ipify API to grab your IP and the ipstack API to get the geographical coordinates based on the IP.
 ip = requests.get("https://api.ipify.org").text
-r = requests.get("http://api.ipstack.com/" + ip + "?access_key=142834bbe4ab45b22e84a39064652b97")
+r = requests.get("http://api.ipstack.com/" + ip + "access_key")
 geo = json.loads(r.text)
 #stores lat and long
 latitude = geo['latitude']
